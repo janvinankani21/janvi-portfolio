@@ -53,9 +53,20 @@ export default function Achievements({ onPreviewCertificate }) {
               </div>
             </div>
 
-            <span className="self-start rounded-full border border-[var(--border-strong)] bg-[var(--bg-chip)] px-4 py-1.5 font-mono text-xs font-medium text-[var(--accent)] sm:self-center">
-              {experience.duration}
-            </span>
+            <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-center">
+              <span className="rounded-full border border-[var(--border-strong)] bg-[var(--bg-chip)] px-4 py-1.5 font-mono text-xs font-medium text-[var(--accent)]">
+                {experience.duration}
+              </span>
+              <button
+                type="button"
+                onClick={() => onPreviewCertificate(experience)}
+                data-cursor-label="CERT"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-[var(--bg-chip)] px-4 py-1.5 text-xs font-semibold text-[var(--accent)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-contrast)]"
+              >
+                <Eye className="h-3.5 w-3.5" />
+                <span>View Certificate</span>
+              </button>
+            </div>
           </div>
           <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[var(--muted)] sm:text-base">
             {experience.summary}
@@ -111,7 +122,7 @@ export default function Achievements({ onPreviewCertificate }) {
                   className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[var(--accent)] px-5 py-2.5 text-sm font-semibold text-[var(--accent-contrast)] shadow-[0_10px_24px_-6px_rgba(118,82,200,0.42)] transition-all hover:-translate-y-0.5 hover:bg-[var(--accent-hover)]"
                 >
                   <Eye className="h-4 w-4" />
-                  <span>Preview Certificate</span>
+                  <span>View Certificate</span>
                 </button>
               </div>
             </div>
@@ -138,12 +149,12 @@ export default function Achievements({ onPreviewCertificate }) {
               </div>
               <div>
                 <dt className="font-mono text-[11px] font-semibold tracking-[0.14em] text-[var(--accent)] uppercase">
-                  Certificate Asset
+                  Credential Status
                 </dt>
                 <dd className="mt-1 text-sm text-[var(--muted)]">
                   {featured.certificateImage
-                    ? 'Certificate uploaded'
-                    : 'Placeholder until scan/PDF uploaded'}
+                    ? 'Scanned Certificate Attached'
+                    : 'Verified Resume Credential'}
                 </dd>
               </div>
             </dl>
@@ -203,11 +214,11 @@ export default function Achievements({ onPreviewCertificate }) {
                   <button
                     type="button"
                     onClick={() => onPreviewCertificate(item)}
-                    data-cursor-label="OPEN"
+                    data-cursor-label="CERT"
                     className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-[var(--bg-chip)] px-3.5 py-1.5 text-xs font-semibold text-[var(--accent)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-contrast)]"
                   >
                     <Eye className="h-3.5 w-3.5" />
-                    <span>Preview</span>
+                    <span>View Certificate</span>
                   </button>
                 </div>
               </motion.article>
@@ -227,7 +238,7 @@ export default function Achievements({ onPreviewCertificate }) {
               </h3>
             </div>
             <p className="font-mono text-xs text-[var(--muted)]">
-              {certifications.length} credentials · Upload images or PDFs to enable preview
+              {certifications.length} credentials · Matches official resume · Click any card to view
             </p>
           </div>
 
@@ -269,15 +280,14 @@ export default function Achievements({ onPreviewCertificate }) {
                     onPreviewCertificate({
                       ...cert,
                       issuer: cert.provider,
+                      credentialScope: cert.detail,
                       description: `${cert.title} (${cert.detail}) — Issued by ${cert.provider}.`,
                     })
                   }
                   className="mt-5 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-chip)] px-3.5 py-2 text-xs font-semibold text-[var(--accent)] transition-colors hover:border-[var(--accent)] hover:bg-[var(--accent)] hover:text-[var(--accent-contrast)]"
                 >
                   <Eye className="h-3.5 w-3.5" />
-                  <span>
-                    {cert.certificateImage ? 'View Certificate' : 'Certificate Slot'}
-                  </span>
+                  <span>View Certificate</span>
                 </button>
               </motion.article>
             ))}

@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ThemeProvider } from './context/ThemeContext';
+import { PORTFOLIO_DATA } from './data/portfolioData';
 import CustomCursor from './components/common/CustomCursor';
 import Preloader from './components/common/Preloader';
 import ScrollProgress from './components/common/ScrollProgress';
@@ -25,6 +26,21 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedCertificate, setSelectedCertificate] = useState(null);
   const [toastNotice, setToastNotice] = useState(null);
+
+  const allCertificates = useMemo(
+    () => [
+      PORTFOLIO_DATA.experience,
+      PORTFOLIO_DATA.achievements.featured,
+      ...PORTFOLIO_DATA.achievements.items,
+      ...PORTFOLIO_DATA.certifications.map((cert) => ({
+        ...cert,
+        issuer: cert.provider,
+        credentialScope: cert.detail,
+        description: `${cert.title} (${cert.detail}) — Issued by ${cert.provider}.`,
+      })),
+    ],
+    []
+  );
 
   const handlePlaceholderLink = useCallback((notice) => {
     setToastNotice(notice);
@@ -82,6 +98,8 @@ export default function App() {
 
         <CertificateModal
           certificate={selectedCertificate}
+          certificates={allCertificates}
+          onSelectCertificate={setSelectedCertificate}
           onClose={() => setSelectedCertificate(null)}
         />
 
