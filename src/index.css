@@ -1,0 +1,224 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+:root {
+  color-scheme: light;
+  --bg-primary: #f5f1ff;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f9f6ff;
+  --bg-chip: #f5f1ff;
+  --bg-glass: rgba(255, 255, 255, 0.86);
+  --bg-glass-strong: rgba(255, 255, 255, 0.95);
+  --bg-modal-backdrop: rgba(36, 33, 45, 0.45);
+  --ink: #24212d;
+  --muted: #5c566b;
+  --accent: #7652c8;
+  --accent-hover: #6541b8;
+  --accent-contrast: #ffffff;
+  --accent-soft: #b69ae8;
+  --accent-tint: rgba(118, 82, 200, 0.1);
+  --border-subtle: rgba(118, 82, 200, 0.15);
+  --border-strong: rgba(118, 82, 200, 0.36);
+  --grid-line: rgba(118, 82, 200, 0.045);
+  --dot-color: rgba(118, 82, 200, 0.14);
+  --shadow-card: 0 14px 36px -14px rgba(118, 82, 200, 0.14);
+  --shadow-card-hover: 0 22px 48px -14px rgba(118, 82, 200, 0.24);
+  --shadow-nav: 0 14px 38px rgba(118, 82, 200, 0.15);
+  --glow-hero: rgba(182, 154, 232, 0.36);
+  --glow-card: rgba(182, 154, 232, 0.42);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-primary: #120f1b;
+  --bg-secondary: #181424;
+  --bg-card: #1d182b;
+  --bg-card-alt: #241e35;
+  --bg-chip: #251f36;
+  --bg-glass: rgba(29, 24, 43, 0.85);
+  --bg-glass-strong: rgba(24, 20, 36, 0.95);
+  --bg-modal-backdrop: rgba(9, 6, 15, 0.72);
+  --ink: #f4f0ff;
+  --muted: #b7afcb;
+  --accent: #b69ae8;
+  --accent-hover: #cab3f3;
+  --accent-contrast: #120f1b;
+  --accent-soft: #7652c8;
+  --accent-tint: rgba(182, 154, 232, 0.15);
+  --border-subtle: rgba(182, 154, 232, 0.18);
+  --border-strong: rgba(182, 154, 232, 0.44);
+  --grid-line: rgba(182, 154, 232, 0.055);
+  --dot-color: rgba(182, 154, 232, 0.16);
+  --shadow-card: 0 16px 40px -14px rgba(5, 3, 12, 0.65);
+  --shadow-card-hover: 0 24px 54px -14px rgba(118, 82, 200, 0.36);
+  --shadow-nav: 0 14px 40px rgba(5, 3, 12, 0.62);
+  --glow-hero: rgba(118, 82, 200, 0.3);
+  --glow-card: rgba(118, 82, 200, 0.28);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 92px;
+    background-color: var(--bg-primary);
+    color: var(--ink);
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--bg-primary);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-contrast);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Custom desktop cursor only when pointer is fine and JS activates it */
+@media (pointer: fine) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button,
+  body.has-custom-cursor [role="button"],
+  body.has-custom-cursor input,
+  body.has-custom-cursor textarea {
+    cursor: none !important;
+  }
+}
+
+/* Architectural soft lavender/violet grid backdrop */
+.hero-board {
+  background-image:
+    linear-gradient(45deg, var(--grid-line) 25%, transparent 25%, transparent 75%, var(--grid-line) 75%),
+    linear-gradient(45deg, var(--grid-line) 25%, transparent 25%, transparent 75%, var(--grid-line) 75%);
+  background-size: 96px 96px;
+  background-position: 0 0, 48px 48px;
+  mask-image: radial-gradient(ellipse at 50% 45%, #000 22%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 45%, #000 22%, transparent 75%);
+}
+
+/* Editorial violet dot matrix surface */
+.dot-grid {
+  background-image: radial-gradient(var(--dot-color) 1px, transparent 1.2px);
+  background-size: 26px 26px;
+}
+
+/* Marquee animation */
+@keyframes marquee-loop {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-loop 34s linear infinite;
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+/* Subtle pulsing status ring */
+@keyframes violet-ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(118, 82, 200, 0.55);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(118, 82, 200, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(118, 82, 200, 0);
+  }
+}
+
+.violet-pulse {
+  animation: violet-ping 2.2s infinite;
+}
+
+/* Elevated card with theme-aware shadow */
+.editorial-card {
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.3s ease,
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.editorial-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-card-hover);
+}
+
+/* Orbit animation for developer visual element */
+@keyframes slow-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes slow-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: slow-spin 28s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: slow-spin-reverse 20s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .marquee-track,
+  .violet-pulse,
+  .animate-orbit,
+  .animate-orbit-reverse {
+    animation: none !important;
+  }
+}
