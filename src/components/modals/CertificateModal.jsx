@@ -160,26 +160,74 @@ export default function CertificateModal({
                     <iframe
                       src={assetPath}
                       title={`${certificate.title} PDF`}
-                      className="h-[440px] w-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-chip)]"
+                      className="h-[460px] w-full rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-chip)]"
                     />
-                    <a
-                      href={assetPath}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
-                    >
-                      <span>Open Certificate PDF in New Tab</span>
-                      <ArrowUpRight className="h-3.5 w-3.5" />
-                    </a>
+                    <div className="flex flex-wrap items-center gap-4">
+                      <a
+                        href={assetPath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
+                      >
+                        <span>Open Certificate PDF in New Tab</span>
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                      {certificate.verifyUrl && (
+                        <a
+                          href={certificate.verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
+                        >
+                          <span>Official Verification Link</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 ) : (
-                  <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-chip)]">
-                    <img
-                      src={assetPath}
-                      alt={`${certificate.title} certificate`}
-                      onError={() => setImgError(true)}
-                      className="max-h-[440px] w-full object-contain"
-                    />
+                  <div className="space-y-3">
+                    <div className="overflow-hidden rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-chip)] p-2">
+                      <img
+                        src={assetPath}
+                        alt={`${certificate.title} original certificate`}
+                        onError={() => setImgError(true)}
+                        className="max-h-[520px] w-full object-contain"
+                      />
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4">
+                      <a
+                        href={assetPath}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
+                      >
+                        <span>Open Full Image in New Tab</span>
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                      {certificate.certificatePdf && (
+                        <a
+                          href={certificate.certificatePdf}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
+                        >
+                          <span>View Official PDF</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                      {certificate.verifyUrl && (
+                        <a
+                          href={certificate.verifyUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-[var(--accent)] hover:underline"
+                        >
+                          <span>Official Verification Link</span>
+                          <ArrowUpRight className="h-3.5 w-3.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 )
               ) : (
